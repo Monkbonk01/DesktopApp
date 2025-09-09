@@ -7,6 +7,7 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -17,6 +18,7 @@ import androidx.compose.foundation.layout.safeContentPadding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -45,6 +47,9 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 import desktopapp.composeapp.generated.resources.Res
 import desktopapp.composeapp.generated.resources.compose_multiplatform
 import javax.sql.RowSetEvent
+import kotlin.system.exitProcess
+
+
 
 
 @Composable
@@ -61,6 +66,7 @@ fun schereSteinPapier() {
     var draw by remember { mutableStateOf(0) }
     var visible by remember { mutableStateOf(false) }
     var visible2 by remember { mutableStateOf(true) }
+
 
     val black = Color(0, 0, 0)
 
@@ -124,7 +130,7 @@ fun schereSteinPapier() {
 
     //Funktion für die Tabelle
     @Composable
-    fun TableCard(content: String, modifier: Modifier = Modifier, header: Boolean = false) {
+    fun TableCard(content: String, modifier: Modifier = Modifier, header: Boolean = false, color: Color) {
         Box(
             modifier = Modifier
                 .clip(RoundedCornerShape(8.dp))
@@ -138,8 +144,8 @@ fun schereSteinPapier() {
                 text = content,
                 fontSize = if (header) 18.sp else 16.sp,
                 fontWeight = if (header) FontWeight.Bold else FontWeight.Medium,
-                color = if (header) Color.White else Color.Black,
-                modifier = Modifier.align(Alignment.Center)
+                modifier = Modifier.align(Alignment.Center),
+                color = color
             )
         }
     }
@@ -189,7 +195,9 @@ fun schereSteinPapier() {
     @Composable
     fun spiel() {
         Column(
-            modifier = Modifier,
+            modifier = Modifier
+                .padding(20.dp)
+
         ) {
             Spacer(modifier = Modifier.height(10.dp))
             Text(userName)
@@ -239,9 +247,9 @@ fun schereSteinPapier() {
             Text("Der Computer wählte: $computerSelection")
             Spacer(modifier = Modifier.height(20.dp))
 
-            Text(result)
+            Text(result, fontWeight = FontWeight.Bold
+                )
             Spacer(modifier = Modifier.height(10.dp))
-
 
             Column(
                 modifier = Modifier
@@ -250,15 +258,15 @@ fun schereSteinPapier() {
                 verticalArrangement = Arrangement.spacedBy(8.dp)
             ) {
                 Row(modifier = Modifier.fillMaxWidth()) {
-                    TableCard("Wins", Modifier.weight(1f), header = true)
-                    TableCard("Loss", Modifier.weight(1f), header = true)
-                    TableCard("Draws", Modifier.weight(1f), header = true)
+                    TableCard("Wins", Modifier.weight(1f), color = Color.White, header = true)
+                    TableCard("Loss", Modifier.weight(1f), color = Color.White, header = true)
+                    TableCard("Draws", Modifier.weight(1f), color = Color.White, header = true)
                 }
 
                 Row(modifier = Modifier.fillMaxWidth()) {
-                    TableCard(userWin.toString(), Modifier.weight(1f))
-                    TableCard(computerWin.toString(), Modifier.weight(1f))
-                    TableCard(draw.toString(), Modifier.weight(1f))
+                    TableCard(userWin.toString(), Modifier.weight(1f), color = Color.Green)
+                    TableCard(computerWin.toString(), Modifier.weight(1f), color = Color.Red)
+                    TableCard(draw.toString(), Modifier.weight(1f), color = Color.Blue)
                 }
             }
 
@@ -279,9 +287,10 @@ fun schereSteinPapier() {
 
                 if (visible) {
                 spiel()
+
                 }
             }
-        }
+}
 
 
 

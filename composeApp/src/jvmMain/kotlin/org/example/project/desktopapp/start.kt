@@ -7,7 +7,6 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.BlendMode.Companion.Color
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
@@ -21,7 +20,7 @@ import kotlin.system.exitProcess
 @Preview
 fun start() {
 
-    var showDialog by remember { mutableStateOf(false) }
+    var showSchereSteinPapier by remember { mutableStateOf(false) }
     val black = Color(0, 0, 0)
 
     Column(
@@ -35,7 +34,7 @@ fun start() {
         )
         Spacer(modifier = Modifier.height(20.dp))
 
-        Button({ showDialog = true},
+        Button({ showSchereSteinPapier = true},
             colors  = ButtonDefaults.buttonColors(
                 containerColor = (black),
                 //contentColor = Color.White
@@ -45,7 +44,7 @@ fun start() {
 
         Spacer(modifier = Modifier.height(50.dp))
 
-        Button(onClick = {},
+        Button(onClick = { exitProcess(0)},
             colors = ButtonDefaults.buttonColors(
                 containerColor = (black)
             )) {
@@ -54,13 +53,13 @@ fun start() {
 
     }
 
-    if (showDialog) {
+    if (showSchereSteinPapier) {
         val state = rememberWindowState(
             size = DpSize(400.dp, 500.dp)
         )
         Window(
             title = "Spieleprogramm",
-            onCloseRequest = {showDialog = false},
+            onCloseRequest = {showSchereSteinPapier = false},
             state = state,
         ) {
             schereSteinPapier()
